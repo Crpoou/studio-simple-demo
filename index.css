@@ -1,0 +1,221 @@
+:root {
+  --success-color: #67c23a;
+  --warning-color: #e6a23c;
+  --danger-color: #f56c6c;
+  --info-color: #909399;
+
+  --primary-text: #303133;
+  --regular-text: #606266;
+  --secondary-text: #909399;
+  --placeholder-text: #c0c4cc;
+
+  --base-border: #dcdfe6;
+  --light-border: #e4e7ed;
+  --lighter-border: #ebeef5;
+  --extra-light-border: #f2f6fc;
+}
+
+html {
+  min-width: 1280px;
+  line-height: 1.5;
+  user-select: none;
+  color: var(--primary-text);
+}
+
+option {
+  min-height: initial;
+  padding: initial;
+}
+
+button {
+  padding: 0 0.5em;
+  line-height: inherit;
+  cursor: pointer;
+}
+
+.scroll {
+  overflow: overlay;
+  border-color: transparent;
+  transition: border-color 1s cubic-bezier(0, 0, 0, 1);
+}
+.scroll::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+.scroll::-webkit-scrollbar-track {
+  display: none;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  border-width: 0.25rem;
+  border-style: solid;
+  border-color: inherit;
+  border-radius: 100vmax;
+}
+
+.scroll:hover {
+  border-color: rgba(144, 147, 153, 0.3);
+}
+
+.scroll::-webkit-scrollbar-thumb:active {
+  border-color: var(--info-color);
+}
+
+body {
+  display: grid;
+  position: relative;
+  height: 100vh;
+  margin: initial;
+  grid: 'header header header' 4rem 'aside main outline' 1fr / 20rem 1fr 20rem;
+  gap: 1px;
+  overflow: hidden;
+  background-color: var(--base-border);
+}
+
+#header {
+  grid-area: header;
+  background-color: white;
+}
+
+#aside {
+  grid-area: aside;
+  background-color: white;
+}
+
+#outline {
+  --deep: 0;
+
+  grid-area: outline;
+  background-color: white;
+}
+
+#main {
+  grid-area: main;
+  display: grid;
+  grid-template-rows: 2rem 1fr;
+  row-gap: 1px;
+  overflow: hidden;
+}
+
+#nav {
+  display: flex;
+  z-index: 0;
+  background-color: white;
+  box-shadow: 0 0 1rem var(--base-border);
+}
+
+#canvas {
+  background-image: radial-gradient(var(--base-border) 1px, ghostwhite 0);
+  background-size: 1rem 1rem;
+  box-shadow: inset 1rem 0 1rem -1rem var(--base-border), inset -1rem 0 1rem -1rem var(--base-border);
+}
+
+#log {
+  display: grid;
+  z-index: 0;
+  grid-template-rows: 2rem;
+  row-gap: 1px;
+  overflow: hidden;
+  box-shadow: 0 0 1rem var(--base-border);
+}
+
+#log-header {
+  background-color: white;
+}
+
+#log-track {
+  min-height: 8rem;
+  background-color: white;
+}
+
+.flow,
+.outline-flow {
+  display: none;
+}
+
+.branch {
+  display: grid;
+  row-gap: 1rem;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.step {
+  background-color: white;
+  min-width: 20rem;
+  border-radius: 0.5rem;
+}
+
+.step__header {
+  height: 2rem;
+  padding-inline: 1rem;
+  font-weight: bold;
+  content-visibility: auto;
+  /* contain-intrinsic-size: 2rem; */
+}
+
+details {
+  position: relative;
+}
+
+.outline-summary {
+  display: flex;
+  cursor: pointer;
+}
+
+.outline-summary::before {
+  width: 1.5rem;
+  height: 1.5rem;
+  content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjEuNXJlbSIgaGVpZ2h0PSIxLjVyZW0iPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzQyNDI0MiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbGluZWNhcD0icm91bmQiIGQ9Ik04IDRsOCA4LTggOCIvPjwvc3ZnPg==);
+  transition: transform 0.1s ease-in-out;
+}
+
+[open] > .outline-summary::before {
+  transform: rotate(0.25turn);
+}
+
+.outline-option {
+  cursor: pointer;
+}
+
+.outline-option::before {
+  padding-inline-start: 0.5rem;
+  content: 'step：';
+  color: #519aba;
+}
+
+:where(.outline-summary, .outline-option):hover {
+  background-color: ghostwhite;
+}
+
+.outline-details::before {
+  position: absolute;
+  top: 1.5rem;
+  bottom: 0;
+  left: calc(var(--deep) * 1rem + 0.6875rem);
+  z-index: 0;
+  width: 0.125rem;
+  content: '';
+  z-index: 1;
+  border-radius: 100vmax;
+  background-color: #424242;
+  user-select: none;
+  pointer-events: none;
+}
+
+.outline-summary {
+  padding-inline-start: calc(var(--deep) * 1rem);
+}
+.outline-option {
+  padding-inline-start: calc(var(--deep) * 1rem + 1rem);
+}
+.outline-details {
+  --deep: 1;
+}
+.outline-details .outline-details {
+  --deep: 2;
+}
+.outline-details .outline-details .outline-details {
+  --deep: 3;
+}
